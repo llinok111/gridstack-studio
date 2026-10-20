@@ -5,7 +5,8 @@
 .yarnrc
 coverage
 test-results
-dist
+# dist is committed on purpose: demo/studio.html loads dist/gridstack-all.js,
+# so a fresh clone can open the demo without a build step.
 dist_save
 node_modules
 .vscode
@@ -16,3 +17,6 @@ angular/doc/html/
 react/doc/html/
 vue/doc/html/
 .claude
+# verification artefacts produced by tools/verify.mjs
+shots/verify-results.json
+dist/*.map

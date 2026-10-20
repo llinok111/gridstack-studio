@@ -1,0 +1,25 @@
+# Keep line endings stable across platforms.
+#
+# Without this, a Windows clone converts every text file to CRLF, and the snapshot/byte-exact
+# assertions in the test suite start failing on files that nobody edited. Same lesson as the
+# previous fork in this workspace: `* -text` for anything whose bytes matter.
+* -text
+
+# Binary assets must never be normalised.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.zip binary
+
+# Shell scripts and the demo keep their own conventions.
+*.sh text eol=lf
+*.mjs text eol=lf
+*.ts text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+*.md text eol=lf

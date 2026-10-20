@@ -1,5 +1,38 @@
 # gridstack.js
 
+> ## ⚠️ This is a fork: GridStack Studio
+>
+> Upstream: [gridstack/gridstack.js](https://github.com/gridstack/gridstack.js) @ **v14.0.0**
+> (`7ce6c7d`), MIT, © Alain Dumesny. Full credit and change list: [`NOTICE.md`](NOTICE.md).
+> Measured results and design rationale: [`TECHNICAL.md`](TECHNICAL.md).
+>
+> This fork adds a **`src/studio/`** layer on top of the unmodified engine — undo/redo,
+> non-destructive layout planning, reduced-motion-aware morphing, and the keyboard + ARIA
+> support that upstream's `TODO.md` lists as unfinished:
+>
+> | | |
+> |---|---|
+> | **Undo / redo** | Snapshot history, 60 steps, consecutive same-kind edits coalesce so one Ctrl+Z undoes one gesture |
+> | **Align** | Three strategies (`seam` / `compact` / `pack`). `seam` is a shelf reflow that **preserves reading order** — 9 rows → 4 rows, 33 % → 75 % occupancy on the demo board |
+> | **Preview** | Plans are computed as pure data first, so targets can be shown as ghost outlines before committing |
+> | **Keyboard** | Arrows move, Ctrl+arrows resize, Home/End/PageUp/PageDown, Enter to grab, `R` to rotate, Ctrl+Z / Ctrl+Shift+Z |
+> | **Screen readers** | `role="application"` + roving tabindex + per-tile positional labels + polite live region |
+> | **Motion** | FLIP morphing that honours `prefers-reduced-motion` (upstream never checks it) |
+>
+> ```html
+> <script src="dist/gridstack-all.js"></script>
+> <script>
+>   const grid = GridStack.init({ columnOpts: { breakpoints: [{ w: 700, c: 1 }] } });
+>   const studio = new GridStack.Studio(grid);
+>   await studio.align('seam');   // order-preserving tidy-up
+>   await studio.undo();          // Ctrl+Z works too
+> </script>
+> ```
+>
+> Open [`demo/studio.html`](demo/studio.html) directly in a browser — no build step, no CDN.
+> Verify with `npx vitest run` (508 tests, 444 of them unmodified upstream) and
+> `node tools/verify.mjs` (35 real-browser checks).
+
 [![NPM version](https://img.shields.io/npm/v/gridstack.svg)](https://www.npmjs.com/package/gridstack)
 [![Coverage Status](https://coveralls.io/repos/github/gridstack/gridstack.js/badge.svg?branch=master)](https://coveralls.io/github/gridstack/gridstack.js?branch=master)
 [![downloads](https://img.shields.io/npm/dm/gridstack.svg)](https://www.npmjs.com/package/gridstack)

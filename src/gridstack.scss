@@ -305,3 +305,49 @@
     display: none !important;
   }
 }
+
+/**
+ * Studio layer styles — NEW IN THIS FORK (see NOTICE.md).
+ * Only additive rules; no upstream selector is modified.
+ */
+
+/* Visually hidden live region used to announce layout changes to screen readers. */
+.gs-studio-sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Keyboard focus must be visible on tiles; upstream has no focus style at all. */
+.grid-stack > .grid-stack-item:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+  border-radius: 6px;
+  z-index: 3;
+}
+
+/* While a tile is "grabbed" (Enter/Space), show it's the active one. */
+.grid-stack > .grid-stack-item[aria-grabbed="true"] {
+  outline: 3px dashed #f59e0b;
+  outline-offset: 2px;
+  z-index: 4;
+}
+
+/* Honour the OS reduced-motion setting for the upstream transition class too.
+   Upstream never checks this; motion-sensitive users would otherwise still get sliding tiles. */
+@media (prefers-reduced-motion: reduce) {
+  .grid-stack-animate,
+  .grid-stack-animate .grid-stack-item {
+    transition: none !important;
+  }
+}
+
+/* Optional: subtle affordance that tiles are keyboard operable. */
+.grid-stack > .grid-stack-item[role="group"] {
+  touch-action: manipulation;
+}

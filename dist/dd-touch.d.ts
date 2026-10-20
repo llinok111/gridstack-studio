@@ -1,0 +1,46 @@
+/**
+ * touch.ts 14.0.0
+ * Copyright (c) 2021-2025 Alain Dumesny - see GridStack root license
+ */
+/**
+ * Detect touch support - Windows Surface devices and other touch devices
+ * should we use this instead ? (what we had for always showing resize handles)
+ * /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+ */
+export declare const isTouch: boolean;
+export declare class DDTouch {
+    /** set to true while we are handling touch dragging, to prevent accepting browser real mouse events (trusted:true) vs our simulated ones (trusted:false) */
+    static touchHandled?: boolean;
+    static pointerLeaveTimeout?: number;
+    /** @internal timer waiting to see if the user pauses (drag) or moves/releases (scroll/tap) */
+    static touchDelayTimer?: number;
+    /** @internal true right before we simulate the delayed mousedown, so DDDraggable knows to show the 'armed' drag feedback */
+    static wasDelayed?: boolean;
+}
+/** defensively clears any pending delayed touch-drag timer, e.g. when a draggable is disabled/destroyed mid-wait */
+export declare function cancelPendingTouchDrag(): void;
+/**
+ * Handle the touchstart events - waits for `touchDragDelay` (a pause/long-press) before starting
+ * the drag, so a quick swipe scrolls the page instead - see issue #2781
+ * @param {Object} e The widget element's touchstart event
+ */
+export declare function touchstart(e: TouchEvent): void;
+/**
+ * Handle the touchmove events
+ * @param {Object} e The document's touchmove event
+ */
+export declare function touchmove(e: TouchEvent): void;
+/**
+ * Handle the touchend events - also used for `touchcancel` (browser aborting the gesture, which is
+ * what we get if something still manages to pop a long-press menu over us) so we always clean up.
+ * @param {Object} e The document's touchend event
+ */
+export declare function touchend(e: TouchEvent): void;
+/**
+ * Note we don't get touchenter/touchleave (which are deprecated)
+ * see https://stackoverflow.com/questions/27908339/js-touch-equivalent-for-mouseenter
+ * so instead of PointerEvent to still get enter/leave and send the matching mouse event.
+ */
+export declare function pointerdown(e: PointerEvent): void;
+export declare function pointerenter(e: PointerEvent): void;
+export declare function pointerleave(e: PointerEvent): void;

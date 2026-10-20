@@ -40,6 +40,21 @@ export * from './dd-resizable';
 export * from './dd-resizable-handle';
 export * from './dd-base-impl';
 
+/*
+ * Studio layer — NEW IN THIS FORK (see NOTICE.md).
+ * Layered on the public API only; no upstream class is patched. Re-exported here so a single
+ * import of `gridstack` also gives you the undo/plan/morph/a11y additions.
+ * Note: studio types are namespaced to avoid colliding with the upstream `Box`-like names.
+ */
+export * from './studio/studio';
+export * as StudioTypes from './studio/types';
+
+/*
+ * The UMD build sets `libraryExport: 'GridStack'`, so the global is the class itself and any
+ * sibling named exports would be unreachable from a plain <script> tag. `registerStudio()` is
+ * called at the bottom of this file so `GridStack.Studio` works without a second bundle.
+ */
+
 export interface GridHTMLElement extends HTMLElement {
   gridstack?: GridStack; // grid's parent DOM element points back to grid class
 }
@@ -3239,3 +3254,12 @@ export class GridStack {
   }
 
 }
+
+/*
+ * Studio registration — NEW IN THIS FORK.
+ * Runs at the very bottom so the `GridStack` class binding is fully initialised before the
+ * studio layer (which imports it back) is touched. Keeps the UMD global usable from a plain
+ * <script> tag: `new GridStack.Studio(grid)`.
+ */
+import { registerStudio } from './studio/register';
+registerStudio();
