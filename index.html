@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GridStack Studio — layout that behaves</title>
+<!--
+  Landing page for the GitHub Pages deployment.
+  It is a thin redirect so that demo/studio.html keeps working with its relative
+  "../dist/gridstack-all.js" reference both locally (file://) and on Pages.
+-->
+<meta http-equiv="refresh" content="0; url=./demo/studio.html">
+<link rel="canonical" href="./demo/studio.html">
+<style>
+  html, body { margin: 0; height: 100%; background: #12100e; color: #f2ece3;
+    font: 15px/1.6 "Segoe UI", system-ui, sans-serif; }
+  .box { display: grid; place-items: center; height: 100%; text-align: center; padding: 24px; }
+  a { color: #e0a458; }
+  .mark { width: 44px; height: 44px; border-radius: 12px; margin: 0 auto 14px;
+    background: linear-gradient(145deg, #e0a458, #c96f4a); display: grid; place-items: center;
+    color: #22180f; font-weight: 800; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <div>
+      <div class="mark">GS</div>
+      <h1 style="font-size:20px;margin:0 0 6px;">GridStack Studio</h1>
+      <p style="color:#a99e8f;margin:0 0 12px;">Undo/redo · order-preserving alignment · keyboard &amp; screen-reader support</p>
+      <p><a href="./demo/studio.html">Open the demo →</a></p>
+    </div>
+  </div>
+</body>
+</html>
